@@ -89,7 +89,9 @@ export default function Home() {
             type="number"
             placeholder="Bill Total:"
             value={billTotal}
-            onChange={(e)=>setBillTotal(parseFloat(e.target.value))}/>
+            onChange={(e)=>setBillTotal(parseFloat(e.target.value))}
+            pattern="\d*"
+            inputMode="decimal" />
 
           {
             billIncrements.length > 0 && <div className="w-72">
