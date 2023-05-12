@@ -36,7 +36,7 @@ const percentFormatter = new Intl.NumberFormat('en-US', {
 });
 
 const PREFERRED_TIP_PERCENTAGE = 0.18
-const PREFERRED_BILL_INCREMENT = 0.50
+const PREFERRED_BILL_INCREMENT = 0.25
 
 function FormattedBill({ bill }: { bill: RoundedBill }) {
   return <div className="flex flex-row justify-between">
