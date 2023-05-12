@@ -46,7 +46,10 @@ function FormattedBill({ bill }: { bill: RoundedBill }) {
 }
 
 export default function Home() {
-  const [billTotal, setBillTotal] = useState(0)
+  const [billTotalInput, setBillTotal] = useState('')
+
+  const billTotal = parseFloat(billTotalInput)
+
   const [personCount, setPersonCount] = useState(1)
 
   const standardBill = useMemo(
@@ -86,11 +89,11 @@ export default function Home() {
         <form className="pb-4">
           <input
             className="relative w-full cursor-default rounded-lg bg-white py-2 pl-3 pr-2 text-left shadow-md focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm"
-            type="number"
+            type="text"
             placeholder="Bill Total:"
-            value={billTotal}
-            onChange={(e)=>setBillTotal(parseFloat(e.target.value))}
-            pattern="\d*"
+            value={billTotalInput}
+            pattern="[0-9]+([\.][0-9]{1,2})?"
+            onChange={(e) => setBillTotal(e.target.value)}
             inputMode="decimal" />
 
           {
