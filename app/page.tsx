@@ -18,7 +18,7 @@ class RoundedBill {
   }
 
   get tipPercentage(): number {
-    return this.tipAmount / (this.billTotalWithTip - this.tipAmount)
+    return this.billTotalWithTip > 0 ? this.tipAmount / (this.billTotalWithTip - this.tipAmount) : 0
   }
 }
 
@@ -59,19 +59,23 @@ export default function Home() {
 
   const billIncrements = useMemo(
     () => {
-      const roundedTotal = Math.ceil(billTotal)
-      const billIncrements: RoundedBill[] = [];
-      for (var i = roundedTotal; i < roundedTotal * 2; i = i + PREFERRED_BILL_INCREMENT) {
-        billIncrements.push(new RoundedBill(billTotal, i));
+      if (billTotal > 0) {
+        const roundedTotal = Math.ceil(billTotal)
+        const billIncrements: RoundedBill[] = [];
+        for (var i = roundedTotal; i < roundedTotal * 2; i = i + PREFERRED_BILL_INCREMENT) {
+          billIncrements.push(new RoundedBill(billTotal, i));
+        }
+
+        if (billTotal > 0 && !billIncrements.some(bill => bill.billTotalWithTip === standardBill.billTotalWithTip)) {
+          billIncrements.push(standardBill)
+        }
+
+        billIncrements.sort((a, b) => a.billTotalWithTip - b.billTotalWithTip)
+
+        return billIncrements;
       }
 
-      if (billTotal > 0 && !billIncrements.some(bill => bill.billTotalWithTip === standardBill.billTotalWithTip)) {
-        billIncrements.push(standardBill)
-      }
-
-      billIncrements.sort((a, b) => a.billTotalWithTip - b.billTotalWithTip)
-
-      return billIncrements;
+      return [new RoundedBill(0, 0)]
     },
     [billTotal, standardBill]
   );
