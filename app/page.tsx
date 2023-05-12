@@ -59,8 +59,9 @@ export default function Home() {
 
   const billIncrements = useMemo(
     () => {
+      const roundedTotal = Math.ceil(billTotal)
       const billIncrements: RoundedBill[] = [];
-      for (var i = billTotal; i < billTotal * 2; i = i + PREFERRED_BILL_INCREMENT) {
+      for (var i = roundedTotal; i < roundedTotal * 2; i = i + PREFERRED_BILL_INCREMENT) {
         billIncrements.push(new RoundedBill(billTotal, i));
       }
 
@@ -85,7 +86,7 @@ export default function Home() {
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-center p-24 bg-black">
-      <div className="max-w-screen-sm">
+      <div className="w-64">
         <form className="pb-4">
           <input
             className="relative w-full cursor-default rounded-lg bg-white py-2 pl-3 pr-2 text-left shadow-md focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm"
@@ -97,7 +98,7 @@ export default function Home() {
             inputMode="decimal" />
 
           {
-            billIncrements.length > 0 && <div className="w-72">
+            billIncrements.length > 0 && <div>
               <Listbox value={selectedBillIncrement} onChange={setSelectedBillIncrement}>
                 <div className="relative mt-1 z-10">
                   <Listbox.Button className="relative w-full cursor-default rounded-lg bg-white py-2 pl-3 pr-10 text-left shadow-md focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm">
